@@ -33,7 +33,7 @@ class User(db.Model):
     def serialize_with_favorites(self):
         
         data = self.serialize()
-        data["favorites"] = [favorite.serialize_with_details() for favorite in self.favorites]
+        data["favorites"] = [favorite.serialize_with_details() for favorite in self.favorite]
         return data
         
 
@@ -96,7 +96,7 @@ class Vehicles(db.Model):
 
   # Relacion inversa
 
-    favorites: Mapped[list["Favorite"]] = relationship(
+    favorite: Mapped[list["Favorite"]] = relationship(
     back_populates="vehicles")
 
 
@@ -121,21 +121,21 @@ class Favorite(db.Model):
 
      # Relaciones 
 
-    user: Mapped[["User"]] = relationship(
+    user: Mapped[list["User"]] = relationship(
     "User",
     back_populates="favorite"
     )
-    planet: Mapped[["Planet"]] = relationship(
+    planet: Mapped[list["Planet"]] = relationship(
     "Planet",
     back_populates="favorite"
     )
 
-    character: Mapped[["Character"]] = relationship(
+    character: Mapped[list["Character"]] = relationship(
     "Character",
     back_populates="favorite"
     )
 
-    vehicle: Mapped[["Vehicles"]] = relationship(
+    vehicle: Mapped[list["Vehicles"]] = relationship(
     "Vehicles",
     back_populates="favorite"
     )
