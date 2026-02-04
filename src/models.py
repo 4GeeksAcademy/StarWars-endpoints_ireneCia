@@ -18,7 +18,7 @@ class User(db.Model):
 
       # Relacion inversa
 
-    favorites: Mapped[list["Favorite"]] = relationship(
+    favorite: Mapped[list["Favorite"]] = relationship(
     back_populates="user")
 
 
@@ -48,7 +48,7 @@ class Planet(db.Model):
 
   # Relacion inversa
 
-    favorites: Mapped[list["Favorite"]] = relationship(
+    favorite: Mapped[list["Favorite"]] = relationship(
     back_populates="planet")
 
     def serialize(self):
@@ -71,7 +71,7 @@ class Character(db.Model):
 
   # Relacion inversa
 
-    favorites: Mapped[list["Favorite"]] = relationship(
+    favorite: Mapped[list["Favorite"]] = relationship(
     back_populates="character")
 
 
