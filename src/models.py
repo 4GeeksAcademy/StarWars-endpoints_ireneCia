@@ -87,7 +87,7 @@ class Character(db.Model):
 
 
 class Vehicle(db.Model):
-    __tablename__= 'vehicles'
+    __tablename__= 'vehicle'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
     cargo_capacity: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)   
@@ -116,27 +116,27 @@ class Favorite(db.Model):
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     planet_id: Mapped[int] = mapped_column(ForeignKey('planet.id'), nullable=True)
     charachter_id: Mapped[int] = mapped_column(ForeignKey('character.id'), nullable=True)
-    vehicle_id: Mapped[int] = mapped_column(ForeignKey('vehicles.id'), nullable=True)
+    vehicle_id: Mapped[int] = mapped_column(ForeignKey('vehicle.id'), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
      # Relaciones 
 
-    user: Mapped[["User"]] = relationship(
+    user: Mapped["User"] = relationship(
     "User",
     back_populates="favorite"
     )
-    planet: Mapped[["Planet"]] = relationship(
+    planet: Mapped["Planet"] = relationship(
     "Planet",
     back_populates="favorite"
     )
 
-    character: Mapped[["Character"]] = relationship(
+    character: Mapped["Character"] = relationship(
     "Character",
     back_populates="favorite"
     )
 
-    vehicle: Mapped[["Vehicles"]] = relationship(
-    "Vehicles",
+    vehicle: Mapped["Vehicle"] = relationship(
+    "Vehicle",
     back_populates="favorite"
     )
 
