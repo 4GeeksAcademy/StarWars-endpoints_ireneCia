@@ -86,7 +86,7 @@ class Character(db.Model):
         }
 
 
-class Vehicles(db.Model):
+class Vehicle(db.Model):
     __tablename__= 'vehicles'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
@@ -97,7 +97,7 @@ class Vehicles(db.Model):
   # Relacion inversa
 
     favorite: Mapped[list["Favorite"]] = relationship(
-    back_populates="vehicles")
+    back_populates="vehicle")
 
 
 
@@ -121,21 +121,21 @@ class Favorite(db.Model):
 
      # Relaciones 
 
-    user: Mapped[list["User"]] = relationship(
+    user: Mapped[["User"]] = relationship(
     "User",
     back_populates="favorite"
     )
-    planet: Mapped[list["Planet"]] = relationship(
+    planet: Mapped[["Planet"]] = relationship(
     "Planet",
     back_populates="favorite"
     )
 
-    character: Mapped[list["Character"]] = relationship(
+    character: Mapped[["Character"]] = relationship(
     "Character",
     back_populates="favorite"
     )
 
-    vehicle: Mapped[list["Vehicles"]] = relationship(
+    vehicle: Mapped[["Vehicles"]] = relationship(
     "Vehicles",
     back_populates="favorite"
     )
