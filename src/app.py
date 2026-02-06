@@ -321,6 +321,108 @@ def delete_character(character_id):
 
 
 
+# FAVORITOS!!!!!!!!!!!
+
+# [POST] Añadir characyter Favorito
+
+@app.route('/favorite/character/<int:people_id>', methods=['POST'])
+def add_favorite_character(character_id):
+    body = request.get_json()
+    user_id = body.get("user_id") # El ID del usuario que pulsa el botón
+
+    if not user_id:
+        return jsonify({"msg": "user_id es obligatorio"}), 400
+
+    exists = Favorite.query.filter_by(user_id=user_id, character_id=character_id).first()
+    if exists: return jsonify({"msg": "Este personaje ya es favorito"}), 400
+
+    try:
+        
+        character = Character.query.get(character_id)
+        if not character:
+            return jsonify({"msg": "El personaje no existe"}), 404
+
+        new_fav = Favorite(user_id=user_id, character_id=character_id)
+        db.session.add(new_fav)
+        db.session.commit()
+        
+        return jsonify({"msg": f"Personaje {character.name} añadido a favoritos"}), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+
+
+# [POST] Añadir Vehículo Favorito
+
+@app.route('/favorite/vehicle/<int:vehicle_id>', methods=['POST'])
+def add_favorite_vehicle(vehicle_id):
+    body = request.get_json()
+    user_id = body.get("user_id")
+
+    if not user_id:
+        return jsonify({"msg": "user_id es obligatorio"}), 400
+    
+    exists = Favorite.query.filter_by(user_id=user_id, vehicle_id=vehicle_id).first()
+    if exists: return jsonify({"msg": "Este vehículo ya es favorito"}), 400
+
+
+    try:
+        
+        new_fav = Favorite(user_id=user_id, vehicle_id=vehicle_id)
+        db.session.add(new_fav)
+        db.session.commit()
+
+        return jsonify({"msg": "Vehículo añadido a favoritos"}), 201
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+# [POST] Añadir planeta Favorito
+
+@app.route('/favorite/planet/<int:planet_id>', methods=['POST'])
+def add_favorite_planet(planet_id):
+    body = request.get_json()
+    user_id = body.get("user_id")
+
+    if not user_id:
+        return jsonify({"msg": "user_id es obligatorio"}), 400
+
+    exists = Favorite.query.filter_by(user_id=user_id, planet_id=planet_id).first()
+    if exists: return jsonify({"msg": "Este planeta ya es favorito"}), 400
+
+
+    try:
+        
+        new_fav = Favorite(user_id=user_id, planet_id=planet_id)
+        db.session.add(new_fav)
+        db.session.commit()
+
+        return jsonify({"msg": "Planeta añadido a favoritos"}), 201
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+
+# [GET] Obtener todos los favoritos de un usuario específico    
+
+
+@app.route('/users/<int:user_id>/favorites', methods=['GET'])
+def get_all_favorites_of_user(user_id):
+
+    user = User.query.get(user_id)
+
+   
+    if user is None:
+        abort(404, description=f"Usuario {user_id} no encontrado")
+
+
+    return jsonify(user.serialize_with_favorites()), 200
+
+
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))

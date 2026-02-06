@@ -115,7 +115,7 @@ class Favorite(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     planet_id: Mapped[int] = mapped_column(ForeignKey('planet.id'), nullable=True)
-    charachter_id: Mapped[int] = mapped_column(ForeignKey('character.id'), nullable=True)
+    character_id: Mapped[int] = mapped_column(ForeignKey('character.id'), nullable=True)
     vehicle_id: Mapped[int] = mapped_column(ForeignKey('vehicle.id'), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
