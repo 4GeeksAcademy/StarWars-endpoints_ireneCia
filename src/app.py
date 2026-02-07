@@ -78,7 +78,7 @@ def get_planet_by_id(planet_id):
 # GET/ todos los vehículos
 @app.route('/vehicles', methods=['GET'])
 def get_vehicles():
-    all_vehicles = Vehicles.query.all()
+    all_vehicles = Vehicle.query.all()
     vehicles_to_json = jsonify([vehicle.serialize() for vehicle in all_vehicles]), 200
     
     return vehicles_to_json
@@ -87,7 +87,7 @@ def get_vehicles():
 # GET  vehículo por ID
 @app.route('/vehicles/<int:vehicle_id>', methods=['GET'])
 def get_vehicle_by_id(vehicle_id):
-    vehicle = Vehicles.query.get(vehicle_id)
+    vehicle = Vehicle.query.get(vehicle_id)
     
     if vehicle is None:
         
@@ -191,7 +191,7 @@ def create_vehicle():
         abort(400, description="El body no puede estar vacio")
     
     try:
-        new_vehicle = Vehicles()
+        new_vehicle = Vehicle()
         
         new_vehicle.name = body['name']
         new_vehicle.cargo_capacity = body['cargo_capacity']
@@ -283,7 +283,7 @@ def delete_planet(planet_id):
 @app.route('/vehicles/<int:vehicle_id>', methods=['DELETE'])
 def delete_vehicle(vehicle_id):
     # Recuerda: Usamos Vehicles (mayúscula y plural) por tu models.py
-    vehicle = Vehicles.query.get(vehicle_id)
+    vehicle = Vehicle.query.get(vehicle_id)
 
     if vehicle is None:
        abort(404, description=f"Vehículo con id {vehicle_id} no encontrado")

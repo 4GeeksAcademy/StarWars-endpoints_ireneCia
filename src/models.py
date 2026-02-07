@@ -90,9 +90,9 @@ class Vehicle(db.Model):
     __tablename__= 'vehicle'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
-    cargo_capacity: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)   
-    length: Mapped[str] = mapped_column(String(100), unique=True, nullable=False) 
-    model: Mapped[str] = mapped_column(String(100), unique=True, nullable=False) 
+    cargo_capacity: Mapped[str] = mapped_column(String(100), unique=False, nullable=False)   
+    length: Mapped[str] = mapped_column(String(100), unique=False, nullable=False) 
+    model: Mapped[str] = mapped_column(String(100), unique=False, nullable=False) 
 
   # Relacion inversa
 
